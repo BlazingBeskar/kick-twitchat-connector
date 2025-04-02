@@ -17,16 +17,19 @@
     },
     "files": [
       "dist/**/*",
+      "ui/dist/**/*",
       "preload.js",
       "chatLogic.js",
       "config.json",
-      "ui/dist/**/*"
+      "node_modules/**/*"
     ],
     "extraResources": [
       {
         "from": "assets/",
         "to": "assets",
-        "filter": ["**/*"]
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "win": {
