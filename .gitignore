@@ -1,7 +1,27 @@
+# Node modules
 node_modules/
-release/
+
+# Build outputs
 dist/
+release/
+ui/dist/
 *.log
-.DS_Store
-*.exe
 *.zip
+*.exe
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor files
+.vscode/
+.idea/
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment configs (if added later)
+.env
+.env.local
+.env.development
+.env.production
