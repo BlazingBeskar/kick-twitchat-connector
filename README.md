@@ -37,7 +37,10 @@ Credit is appreciated but not required. Happy Streaming!
 
 OBS must be running and have [WebSocket Server](https://obsproject.com/forum/resources/obs-websocket-remote-control-obs-studio-from-websockets.466/) enabled.
 
-Credits
+---
+
+## Credits
+
 This project uses and integrates with Twitchat — a powerful tool for managing custom chat overlays in OBS.
 
 💬 Twitchat by Durss
