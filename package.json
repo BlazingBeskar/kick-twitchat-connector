@@ -10,34 +10,42 @@
     "build:portable": "tsc && npm run build-ui && electron-builder --win portable"
   },
   "build": {
-    "appId": "com.kickchat.obs",
-    "productName": "Kick Chat Connector",
-    "directories": {
-      "output": "release"
-    },
-    "files": [
-      "dist/**/*",
-      "ui/dist/**/*",
-      "preload.js",
-      "chatLogic.js",
-      "config.json",
-      "node_modules/**/*"
-    ],
-    "extraResources": [
-      {
-        "from": "assets/",
-        "to": "assets",
-        "filter": [
-          "**/*"
-        ]
-      }
-    ],
-    "win": {
-      "target": "portable",
-      "icon": "assets/icon.ico",
-      "artifactName": "${productName}.exe"
-    }
+  "appId": "com.kickchat.obs",
+  "productName": "Kick Chat Connector",
+  "asar": true,
+  "directories": {
+    "output": "release"
   },
+  "files": [
+    "dist/**/*",
+    "ui/dist/**/*",
+    "config.json"
+  ],
+  "extraResources": [
+    {
+      "from": "assets/",
+      "to": "assets",
+      "filter": [
+        "**/*"
+      ]
+    }
+  ],
+  "win": {
+    "target": [
+      "nsis" 
+    ],
+    "icon": "assets/icon.ico",
+    "artifactName": "${productName}-Setup-${version}.${ext}"
+  },
+  "nsis": {
+    "oneClick": true,
+    "perMachine": false,
+    "allowElevation": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Kick Chat Connector"
+  }
+},
   "devDependencies": {
     "@types/node": "^22.13.17",
     "electron": "^27.0.0",

@@ -31,7 +31,7 @@ ipcMain.on('save-config', (_event, config) => {
 });
 
 ipcMain.on('start-app', () => {
-  import('./chatLogic');
+  import(path.join(__dirname, 'chatLogic.js'));
 });
 
 ipcMain.on("update-style", (_event, data) => {

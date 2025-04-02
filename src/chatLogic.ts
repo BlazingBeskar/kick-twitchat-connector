@@ -5,6 +5,7 @@ import { createClient } from '@retconned/kick-js';
 import { BrowserWindow } from 'electron';
 import { liveStyle } from './main';
 
+
 function sendToRenderer(channel: string, data: any) {
   const win = BrowserWindow.getAllWindows()[0];
   if (win) {
