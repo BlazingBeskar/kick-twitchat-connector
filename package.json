@@ -1,0 +1,48 @@
+{
+  "name": "kick-chat-connector-by-blazingbeskar",
+  "version": "1.0.0",
+  "author": "BlazingBeskar",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build-ui": "cd ui && npm install && npm run build",
+    "build": "tsc && npm run build-ui && electron-builder --win",
+    "build:portable": "tsc && npm run build-ui && electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.kickchat.obs",
+    "productName": "Kick Chat Connector",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "preload.js",
+      "chatLogic.js",
+      "config.json",
+      "ui/dist/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "assets/",
+        "to": "assets",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "assets/icon.ico",
+      "artifactName": "${productName}.exe"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.17",
+    "electron": "^27.0.0",
+    "electron-builder": "^24.13.3",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@retconned/kick-js": "^0.5.2",
+    "obs-websocket-js": "^5.0.6"
+  }
+}
