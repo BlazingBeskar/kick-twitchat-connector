@@ -55,4 +55,4 @@ This connector simply acts as a bridge between Kick chat and the Twitchat-powere
 ---
 
 Built by BlazingBeskar with caffeine, chat hype, and a little chaos ✨
-Follow me on GitHub: @BlazingBeskar
+Follow me on GitHub: [@BlazingBeskar](https://github.com/BlazingBeskar)
