@@ -4,6 +4,8 @@
 
 Made with ❤️ by [BlazingBeskar](https://github.com/BlazingBeskar)
 
+Credit is appreciated but not required. Happy Streaming!
+
 ---
 
 ## ✨ Features
@@ -35,5 +37,17 @@ Made with ❤️ by [BlazingBeskar](https://github.com/BlazingBeskar)
 
 OBS must be running and have [WebSocket Server](https://obsproject.com/forum/resources/obs-websocket-remote-control-obs-studio-from-websockets.466/) enabled.
 
-Built with caffeine, chat hype, and a little chaos ✨
+Credits
+This project uses and integrates with Twitchat — a powerful tool for managing custom chat overlays in OBS.
+
+💬 Twitchat by Durss
+
+🌐 Website: https://twitchat.fr
+
+All credit for the overlay system and Twitchat backend goes to Durss.
+This connector simply acts as a bridge between Kick chat and the Twitchat-powered interface.
+
+---
+
+Built by BlazingBeskar with caffeine, chat hype, and a little chaos ✨
 Follow me on GitHub: @BlazingBeskar
