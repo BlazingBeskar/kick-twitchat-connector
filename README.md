@@ -37,6 +37,8 @@ Credit is appreciated but not required. Happy Streaming!
 
 OBS must be running and have [WebSocket Server](https://obsproject.com/forum/resources/obs-websocket-remote-control-obs-studio-from-websockets.466/) enabled.
 
+OBS needs to be connected to [Twitchat](https://twitchat.fr)
+
 ---
 
 ## Credits
