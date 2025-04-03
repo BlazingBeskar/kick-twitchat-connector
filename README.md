@@ -26,6 +26,21 @@ Credit is appreciated but not required. Happy Streaming!
 
 ---
 
+## ⚠️ Windows SmartScreen Warning
+
+When running the app for the first time on Windows, you may see a **"Windows protected your PC"** warning from SmartScreen.
+
+This happens because the app is not code-signed yet. You can safely bypass this by following these steps:
+
+1. Click **"More info"**  
+2. Then click the **"Run anyway"** button
+
+### 📷 Example:
+
+![SmartScreen warning with Run Anyway](./assets/smartscreen_warning.png)
+
+---
+
 ## 🚀 Getting Started
 
 1. **Run the app**
