@@ -7,7 +7,8 @@ declare global {
       startApp: () => void;
       onStatusUpdate: (callback: (msg: string) => void) => void;
       onChatMessage: (callback: (data: { user: string; content: string }) => void) => void;
-      updateMessageStyle: (data: { color: string; icon: string }) => void; // ✅ Add this
+      updateMessageStyle: (data: { color: string; icon: string }) => void;
+      loadConfig: () => Promise<any>; // ✅ Added this line
     };
   }
 }

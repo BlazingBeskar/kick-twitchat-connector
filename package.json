@@ -1,59 +1,72 @@
 {
   "name": "kick-chat-connector-by-blazingbeskar",
   "version": "1.0.0",
+  "description": "Kick Chat Connector for Twitchat - Made by BlazingBeskar",
   "author": "BlazingBeskar",
   "main": "dist/main.js",
   "scripts": {
     "dev": "vite",
     "build-ui": "cd ui && npm install && npm run build",
     "build": "tsc && npm run build-ui && electron-builder --win",
-    "build:portable": "tsc && npm run build-ui && electron-builder --win portable"
+    "build:portable": "tsc && npm run build-ui && electron-builder --win portable",
+    "rebuild": "electron-rebuild",
+    "postinstall": "electron-builder install-app-deps",
+    "clean": "rimraf dist release"
   },
   "build": {
-  "appId": "com.kickchat.obs",
-  "productName": "Kick Chat Connector",
-  "asar": true,
-  "directories": {
-    "output": "release"
-  },
-  "files": [
-    "dist/**/*",
-    "ui/dist/**/*",
-    "config.json"
-  ],
-  "extraResources": [
-    {
-      "from": "assets/",
-      "to": "assets",
-      "filter": [
-        "**/*"
-      ]
-    }
-  ],
-  "win": {
-    "target": [
-      "nsis" 
+    "appId": "com.kickchat.obs",
+    "productName": "Kick Chat Connector",
+    "asar": false,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "ui/dist/**/*",
+      "config.json",
+      "node_modules/**/*"
     ],
-    "icon": "assets/icon.ico",
-    "artifactName": "${productName}-Setup-${version}.${ext}"
+    "extraResources": [
+      {
+        "from": "assets/",
+        "to": "assets",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "node_modules/@puppeteer/.local-chromium",
+        "to": "app/@puppeteer/.local-chromium",
+        "filter": ["**/*", "**/*.exe", "**/*.dll"]
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowElevation": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Kick Chat Connector"
+    }
   },
-  "nsis": {
-    "oneClick": true,
-    "perMachine": false,
-    "allowElevation": true,
-    "createDesktopShortcut": true,
-    "createStartMenuShortcut": true,
-    "shortcutName": "Kick Chat Connector"
-  }
-},
   "devDependencies": {
     "@types/node": "^22.13.17",
     "electron": "^27.0.0",
     "electron-builder": "^24.13.3",
+    "electron-rebuild": "^3.2.9",
+    "rimraf": "^6.0.1",
     "typescript": "^5.8.2"
   },
   "dependencies": {
     "@retconned/kick-js": "^0.5.2",
-    "obs-websocket-js": "^5.0.6"
+    "obs-websocket-js": "^5.0.6",
+    "puppeteer": "^24.5.0"
   }
 }

@@ -31,6 +31,23 @@ export default function App() {
         });
     }, []);
 
+    useEffect(() => {
+        async function loadConfig() {
+          if (window.electronAPI?.loadConfig) {
+            const config = await window.electronAPI.loadConfig();
+      
+            setKickChannel(config.KICK.CHANNEL ?? "");
+            setObsIp(config.OBS.IP ?? "127.0.0.1");
+            setObsPort(config.OBS.PORT?.toString() ?? "4455");
+            setObsPassword(config.OBS.PASSWORD ?? "");
+            setMessageColor(config.MESSAGE?.DEFAULT_COLOR ?? "#00FF00");
+            setIcon(config.MESSAGE?.DEFAULT_ICON ?? "kick");
+          }
+        }
+      
+        loadConfig();
+    }, []);
+
     const [status, setStatus] = useState("Not connected");
     useEffect(() => {
         document.title = "Kick Chat Connector For Twitchat Made by BlazingBeskar";

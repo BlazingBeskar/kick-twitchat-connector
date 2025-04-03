@@ -3,6 +3,7 @@ import { contextBridge, ipcRenderer } from 'electron';
 contextBridge.exposeInMainWorld('electronAPI', {
   saveConfig: (config: any) => ipcRenderer.send('save-config', config),
   startApp: () => ipcRenderer.send('start-app'),
+  loadConfig: () => ipcRenderer.invoke('load-config'),
   onStatusUpdate: (callback: (msg: string) => void) => {
     ipcRenderer.on('status-update', (_event, msg) => callback(msg));
   },
