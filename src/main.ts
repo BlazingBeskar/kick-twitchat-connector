@@ -10,12 +10,13 @@ console.error = (...args) => logStream.write('[ERROR] ' + args.join(' ') + '\n')
 
 export let liveStyle = {
   color: "#00FF00",
-  icon: "kick"
+  icon: "kick",
+  col: 0
 };
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
-    width: 600,
+    width: 800,
     height: 1050,
     title: "Kick Chat Connector For Twitchat",
     webPreferences: {

@@ -12,12 +12,15 @@ export default function App() {
     const [obsPassword, setObsPassword] = useState("");
     const [messageColor, setMessageColor] = useState("#00FF00");
     const [icon, setIcon] = useState("kick");
+    const [column, setColumn] = useState(0);
+    const [availableColumns, setAvailableColumns] = useState(5);
     useEffect(() => {
         window.electronAPI?.updateMessageStyle({
             color: messageColor,
             icon: icon,
+            col: column,
         });
-    }, [messageColor, icon]);
+    }, [messageColor, icon, column]);
 
     const [messages, setMessages] = useState<{ user: string; content: string }[]>([]);
 
@@ -29,22 +32,27 @@ export default function App() {
         window.electronAPI?.onChatMessage((data) => {
             setMessages((prev) => [...prev.slice(-100), data]);
         });
+
+        window.electronAPI?.onColumnCount?.((count: number) => {
+            setAvailableColumns(count);
+        });
     }, []);
 
     useEffect(() => {
         async function loadConfig() {
-          if (window.electronAPI?.loadConfig) {
-            const config = await window.electronAPI.loadConfig();
-      
-            setKickChannel(config.KICK.CHANNEL ?? "");
-            setObsIp(config.OBS.IP ?? "127.0.0.1");
-            setObsPort(config.OBS.PORT?.toString() ?? "4455");
-            setObsPassword(config.OBS.PASSWORD ?? "");
-            setMessageColor(config.MESSAGE?.DEFAULT_COLOR ?? "#00FF00");
-            setIcon(config.MESSAGE?.DEFAULT_ICON ?? "kick");
-          }
+            if (window.electronAPI?.loadConfig) {
+                const config = await window.electronAPI.loadConfig();
+
+                setKickChannel(config.KICK.CHANNEL ?? "");
+                setObsIp(config.OBS.IP ?? "127.0.0.1");
+                setObsPort(config.OBS.PORT?.toString() ?? "4455");
+                setObsPassword(config.OBS.PASSWORD ?? "");
+                setMessageColor(config.MESSAGE?.DEFAULT_COLOR ?? "#00FF00");
+                setIcon(config.MESSAGE?.DEFAULT_ICON ?? "kick");
+                setColumn(config.MESSAGE?.DEFAULT_COLUMN ?? 0);
+            }
         }
-      
+
         loadConfig();
     }, []);
 
@@ -69,7 +77,7 @@ export default function App() {
                 DEFAULT_COLOR: messageColor,
                 DEFAULT_ICON: icon,
                 DEFAULT_STYLE: "message",
-                DEFAULT_COLUMN: 2,
+                DEFAULT_COLUMN: column,
                 DEFAULT_AVATAR: "https://www.kick.com/user-avatar.png",
             },
         };
@@ -137,40 +145,71 @@ export default function App() {
                     </div>
 
                     <div>
-                        <Label>Message Color</Label>
-                        <div className="flex items-center gap-3 mt-1">
-                            <input
-                                type="color"
-                                value={messageColor}
-                                onChange={(e) => setMessageColor(e.target.value)}
-                                className="w-10 h-10 rounded border-2 border-gray-600 cursor-pointer"
-                            />
-                            <div className="text-sm text-gray-300">Selected: {messageColor}</div>
+                        <Label className="mb-2 block">Message Style</Label>
+                        <div className="flex flex-col sm:flex-row gap-4 mt-1">
+
+                            {/* Color Picker */}
+                            <div className="flex flex-col">
+                                <span className="text-sm text-gray-300 mb-1">Color</span>
+                                <input
+                                    type="color"
+                                    value={messageColor}
+                                    onChange={(e) => setMessageColor(e.target.value)}
+                                    className="w-10 h-10 rounded border-2 border-gray-600 cursor-pointer"
+                                />
+                            </div>
+
+                            {/* Icon Picker */}
+                            <div className="flex flex-col flex-1">
+                                <span className="text-sm text-gray-300 mb-1">Icon</span>
+                                <select
+                                    value={icon}
+                                    onChange={(e) => setIcon(e.target.value)}
+                                    className="bg-gray-700 text-white p-2 rounded"
+                                >
+                                    <option value="kick">𝐊 Kick Logo</option>
+                                    <option value="microphone">Mic</option>
+                                    <option value="microphone_mute">Mute</option>
+                                    <option value="mod">Mod</option>
+                                    <option value="stars">Star</option>
+                                    <option value="alert">Alert</option>
+                                </select>
+                            </div>
+
+                            {/* Column Picker */}
+                            <div className="flex flex-col flex-1">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <span className="text-sm text-gray-300">Column</span>
+                                    <div className="relative group">
+                                        <div className="w-4 h-4 text-xs text-gray-400 border border-gray-500 rounded-full flex items-center justify-center cursor-default">i</div>
+                                        <div className="absolute left-6 top-1 z-10 hidden group-hover:block bg-gray-800 text-gray-300 text-xs rounded px-3 py-2 border border-gray-700 w-64">
+                                            This determines which column in Twitchat the message appears in.<br />
+                                            Column 1 is the leftmost. Higher columns appear further to the right.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <select
+                                    value={column}
+                                    onChange={(e) => setColumn(parseInt(e.target.value))}
+                                    className="bg-gray-700 text-white p-2 rounded"
+                                >
+                                    {[...Array(availableColumns)].map((_, i) => (
+                                        <option key={i} value={i}>{`Column ${i + 1}`}</option>
+                                    ))}
+                                </select>
+                            </div>
+
                         </div>
                     </div>
 
-                    <div className="mt-4">
-                        <Label>Message Icon</Label>
-                        <select
-                            value={icon}
-                            onChange={(e) => setIcon(e.target.value)}
-                            className="bg-gray-700 text-white p-2 rounded w-full mt-1"
-                        >
-                            <option value="kick">𝐊 Kick Logo</option>
-                            <option value="microphone">Mic</option>
-                            <option value="microphone_mute">Mute</option>
-                            <option value="mod">Mod</option>
-                            <option value="stars">Star</option>
-                            <option value="alert">Alert</option>
-                        </select>
-                    </div>
 
                     <div className="mt-6">
                         <Button onClick={saveAndStart}>Save & Connect</Button>
                     </div>
 
                     <div className="text-sm text-gray-400 text-center">Status: {status}</div>
- 
+
                     <div className="mt-6 text-center text-sm text-gray-500">
                         Kick Chat Connector For Twitchat v1.0<br />
                         Made with ❤️ by <span className="text-white font-medium">BlazingBeskar</span><br />

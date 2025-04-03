@@ -13,6 +13,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   updateMessageStyle: (data: { color: string; icon: string }) => {
     ipcRenderer.send('update-style', data);
   },
+  onColumnCount: (callback: (count: number) => void) => {
+    ipcRenderer.on('column-count', (_event, count) => callback(count));
+  },
 });
 
 

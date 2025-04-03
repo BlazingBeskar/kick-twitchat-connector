@@ -40,6 +40,49 @@ function initChatLogic() {
     }
   }
 
+  function getTwitchatColumnCount(): Promise<number> {
+    return new Promise((resolve) => {
+      let timeout: NodeJS.Timeout;
+  
+      // Listen for Twitchat's response to the custom event
+      const onCustomEvent = (event: any) => {
+        if (event.origin !== 'twitchat') return;
+        if (event.type === 'COLS_COUNT') {
+          clearTimeout(timeout);
+          obs.off('CustomEvent', onCustomEvent); // cleanup
+          const count = event.data?.count ?? 3;
+          console.log(`✅ Twitchat column count: ${count}`);
+          resolve(count);
+        }
+      };
+  
+      obs.on('CustomEvent', onCustomEvent);
+  
+      // Send the column count request to Twitchat
+      obs.call('BroadcastCustomEvent', {
+        eventData: {
+          origin: 'twitchat',
+          type: 'GET_COLS_COUNT',
+          data: {},
+        },
+      }).catch((err) => {
+        console.error('❌ Failed to send column count request to Twitchat:', err);
+        clearTimeout(timeout);
+        obs.off('CustomEvent', onCustomEvent);
+        resolve(3); // fallback
+      });
+  
+      // Timeout if Twitchat doesn't respond
+      timeout = setTimeout(() => {
+        console.warn('⚠️ Twitchat did not respond in time. Using default column count.');
+        obs.off('CustomEvent', onCustomEvent);
+        resolve(3);
+      }, 3000);
+    });
+  }
+  
+  
+
   function sendCustomKickChatMessage(messageDetails: {
     message: string;
     user: { name: string; color?: string; avatarUrl?: string };
@@ -60,7 +103,7 @@ function initChatLogic() {
         },
         icon: messageDetails.icon ?? liveStyle.icon,
         style: messageDetails.style ?? 'message',
-        col: messageDetails.col ?? 2,
+        col: messageDetails.col ?? liveStyle.col ,
       },
     };
 
@@ -93,8 +136,12 @@ function initChatLogic() {
     handleChatMessage(message.sender.username, message.content);
   });
 
-  connectToOBS().then(() => {
+  connectToOBS().then(async () => {
     handleChatMessage('BBeskarKickSender', 'Successfully Connected to Kick Chat!');
+    
+    const columnCount = await getTwitchatColumnCount();
+    console.log("📊 Received Twitchat column count from OBS:", columnCount);
+    sendToRenderer("column-count", columnCount);
   });
 }
 

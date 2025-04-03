@@ -1,6 +1,6 @@
 {
   "name": "kick-chat-connector-by-blazingbeskar",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Kick Chat Connector for Twitchat - Made by BlazingBeskar",
   "author": "BlazingBeskar",
   "main": "dist/main.js",
