@@ -56,6 +56,14 @@ OBS needs to be connected to [Twitchat](https://twitchat.fr)
 
 ---
 
+### 🖼️ App Preview
+
+> Here's what the app looks like:
+
+![Kick Chat Connector App Preview](./assets/app_preview.png)
+
+---
+
 ## Credits
 
 This project uses and integrates with Twitchat — a powerful tool for managing custom chat overlays in OBS.
