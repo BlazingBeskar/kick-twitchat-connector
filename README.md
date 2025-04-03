@@ -1,6 +1,6 @@
 # 🎮 Kick Twitchat Connector
 
-**Kick Twitchat Connector** is a portable desktop app that connects your [Kick](https://kick.com) chat directly to [Twitchat](https://twitchat.fr) via [OBS](https://obsproject.com). It enables live chat overlays with full customization — no coding required.
+**Kick Twitchat Connector** is a desktop app that connects your [Kick](https://kick.com) chat directly to [Twitchat](https://twitchat.fr) via [OBS](https://obsproject.com). It enables live chat overlays with full customization — no coding required.
 
 Made with ❤️ by [BlazingBeskar](https://github.com/BlazingBeskar)
 
@@ -14,7 +14,7 @@ Credit is appreciated but not required. Happy Streaming!
 - 🎯 Custom chat color and icon picker
 - 🖥️ OBS WebSocket support (custom events)
 - ⚙️ Built-in config UI (no JSON editing!)
-- 📦 Portable `.exe` — no install required
+- 📦 Select Chat Columns Easily
 - ⚡ Built with Electron + React + Tailwind
 
 ---
@@ -22,7 +22,7 @@ Credit is appreciated but not required. Happy Streaming!
 ## 📥 Download
 
 > 👉 [**Click here to download the latest .exe**](https://github.com/BlazingBeskar/kick-twitchat-connector/releases)  
-> *(Portable — no installation needed)*
+> *(One Click Installation)*
 
 ---
 
