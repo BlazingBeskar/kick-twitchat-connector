@@ -8,7 +8,9 @@
     "dev": "vite",
     "build-ui": "cd ui && npm install && npm run build",
     "build": "tsc && npm run build-ui && electron-builder --win",
+    "build:mac": "tsc && npm run build-ui && electron-builder --mac",
     "build:portable": "tsc && npm run build-ui && electron-builder --win portable",
+    "build:mac-icon": "./scripts/build-mac-icon.sh",
     "rebuild": "electron-rebuild",
     "postinstall": "electron-builder install-app-deps",
     "clean": "rimraf dist release"
@@ -54,6 +56,46 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "Kick Chat Connector"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        },
+        {
+          "target": "zip",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.utilities",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "dmg": {
+      "title": "${productName} ${version}",
+      "icon": "assets/icon.icns",
+      "background": null,
+      "window": {
+        "width": 540,
+        "height": 380
+      },
+      "contents": [
+        {
+          "x": 144,
+          "y": 150
+        },
+        {
+          "x": 396,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     }
   },
   "devDependencies": {
